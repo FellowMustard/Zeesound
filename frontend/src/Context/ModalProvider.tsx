@@ -24,8 +24,7 @@ export const ModalProvider = ({ children }: ModalProps) => {
   const [modal, setModal] = useState<string | null>(null);
 
   const openModal = (name: string) => {
-    console.log(name);
-    setModal((prevState) => name);
+    setModal(name);
   };
   const closeModal = () => {
     setModal(null);

@@ -16,14 +16,12 @@ function AuthChecker() {
       } catch (err) {
         console.error(err);
       } finally {
-        setLoading((prevState) => (prevState = false));
+        setLoading(false);
       }
     };
 
     if (import.meta.env.VITE_NODE_ENV === "prod" || effectRun.current) {
-      !auth?.token
-        ? verifyRefreshToken()
-        : setLoading((prevState) => (prevState = false));
+      !auth?.token ? verifyRefreshToken() : setLoading(false);
     }
 
     return () => {

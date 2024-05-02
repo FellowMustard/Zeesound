@@ -35,7 +35,7 @@ function NewList() {
         title: song.title,
         author: song.author.name,
       }));
-      setNewSongData((prevState) => (prevState = mappedData));
+      setNewSongData(mappedData);
       setLoading(false);
     } catch (err) {
       console.error(err);

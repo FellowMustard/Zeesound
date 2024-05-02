@@ -22,8 +22,7 @@ type songProps = {
 };
 
 function Player() {
-  const [songs, setSongs] = useState();
-  const { isPlaying, setIsPlaying, songId, setSongId } = useAudio();
+  const { isPlaying, setIsPlaying, songId } = useAudio();
 
   const [currSongData, setCurrSongData] = useState<songProps>();
 
@@ -58,7 +57,7 @@ function Player() {
           progress: 0,
         };
 
-        setCurrSongData((prevState) => (prevState = mappedData));
+        setCurrSongData(mappedData);
       } catch (err) {
         console.error(err);
       }

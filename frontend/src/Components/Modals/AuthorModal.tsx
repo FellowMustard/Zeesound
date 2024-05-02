@@ -45,7 +45,7 @@ function AuthorModal({ onClose }: modalProps) {
   };
 
   const handleAuthorChange = (newValue: string) => {
-    setAuthor((prevState) => (prevState = newValue));
+    setAuthor(newValue);
   };
 
   const handleDeleteCountry = () => {
@@ -104,7 +104,7 @@ function AuthorModal({ onClose }: modalProps) {
   };
 
   const handleFileChanges = (file: File | null) => {
-    setImageFile((prevState) => (prevState = file));
+    setImageFile(file);
   };
 
   return (

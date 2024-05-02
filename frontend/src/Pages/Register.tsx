@@ -36,20 +36,20 @@ function Register() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loading) return;
-    setLoading((prevState) => (prevState = true));
+    setLoading(true);
     if (!emailValidity) {
       toast?.open("Please provide valid email.", "error");
-      setLoading((prevState) => (prevState = false));
+      setLoading(false);
       return;
     }
     if (!userValidity) {
       toast?.open("Please provide valid username.", "error");
-      setLoading((prevState) => (prevState = false));
+      setLoading(false);
       return;
     }
     if (!passValidity) {
       toast?.open("Please provide valid password.", "error");
-      setLoading((prevState) => (prevState = false));
+      setLoading(false);
       return;
     }
     try {
@@ -66,7 +66,7 @@ function Register() {
         }
       );
       toast?.open(response.data.message, "success");
-      setLoading((prevState) => (prevState = false));
+      setLoading(false);
       navigate("/login", { replace: true });
     } catch (err: any) {
       if (!err?.response) {
@@ -74,7 +74,7 @@ function Register() {
       } else {
         toast?.open(err.response.data.message, "error");
       }
-      setLoading((prevState) => (prevState = false));
+      setLoading(false);
     }
   };
 
