@@ -1,7 +1,7 @@
 const whitelistLink =
   process.env.NODE_ENV === "dev"
     ? [process.env.LOCAL_BE_URL, process.env.LOCAL_FE_URL]
-    : [];
+    : [process.env.PROD_BE_URL, process.env.PROD_FE_URL];
 
 interface CorsProps {
   origin: (
