@@ -57,7 +57,7 @@ function Song() {
     }
   };
   useEffect(() => {
-    if (effectRun.current && id) {
+    if ((import.meta.env.VITE_NODE_ENV === "prod" || effectRun.current) && id) {
       getNewSong();
     }
     return () => {

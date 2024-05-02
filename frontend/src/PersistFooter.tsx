@@ -9,7 +9,7 @@ function PersistFooter() {
 
   useEffect(() => {
     return () => {
-      if (effectRun.current) {
+      if (import.meta.env.VITE_NODE_ENV === "prod" || effectRun.current) {
         setIsPlaying(false);
         setSongId("");
       }

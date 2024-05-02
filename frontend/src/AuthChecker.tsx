@@ -20,7 +20,7 @@ function AuthChecker() {
       }
     };
 
-    if (effectRun.current) {
+    if (import.meta.env.VITE_NODE_ENV === "prod" || effectRun.current) {
       !auth?.token
         ? verifyRefreshToken()
         : setLoading((prevState) => (prevState = false));
