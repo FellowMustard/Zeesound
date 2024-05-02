@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Figtree", sans-serif;
+
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  background-color: black;
+  color-scheme: dark;
+}
+
+.zeesound {
+  color: transparent !important;
+  background-image: linear-gradient(
+    to left,
+    #ffc94a,
+    #c08b5c,
+    #ff8e8f,
+    #ffb38e,
+    #ff7b54,
+    #279af1
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-background-size: 1000%;
+  background-size: 1000%;
+  animation: gradient 30s linear infinite;
+}
+.skeleton-loading {
+  background-image: linear-gradient(to left, #353535, #555555, #353535);
+  -webkit-background-size: 200%;
+  background-size: 200%;
+  animation: loading 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  opacity: 80%;
+}
+@keyframes gradient {
+  0%,
+  100% {
+    background-position: 0% 100%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+}
+@keyframes loading {
+  0%,
+  100% {
+    background-position: 0% 100%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+}
