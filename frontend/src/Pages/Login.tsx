@@ -8,7 +8,7 @@ import useToast from "../Hooks/useToast";
 import useAuth from "../Hooks/useAuth";
 
 function Login() {
-  const { setAuth } = useAuth();
+  const { setAuth, setLikedSongs } = useAuth();
   const toast = useToast();
 
   const navigate = useNavigate();
@@ -48,8 +48,15 @@ function Login() {
           withCredentials: true,
         }
       );
-      setAuth(response.data);
+
+      setAuth({
+        token: response.data.token,
+        user: response.data.user,
+        email: response.data.email,
+      });
+      setLikedSongs(response.data.likedSong);
       setLoading(false);
+
       navigate(from, { replace: true });
     } catch (err: any) {
       if (!err?.response) {

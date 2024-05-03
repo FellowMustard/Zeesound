@@ -18,9 +18,11 @@ function PersistFooter() {
   }, []);
   return (
     <>
-      <div className="flex w-full h-full  flex-col">
-        <Outlet />
-        <div className="w-full h-20 bg-black">
+      <div className="flex flex-col h-screen max-h-screen">
+        <div className="flex-1 overflow-y-auto">
+          <Outlet />
+        </div>
+        <div className="h-20">
           <Player />
         </div>
       </div>

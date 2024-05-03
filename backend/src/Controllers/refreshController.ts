@@ -73,6 +73,7 @@ export const handleRefreshToken = async (req: Request, res: Response) => {
         user: foundUser.username,
         email: foundUser.email,
         token: accessToken,
+        likedSong: foundUser.likedSongs,
       });
     }
   );

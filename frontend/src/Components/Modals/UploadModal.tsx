@@ -82,7 +82,6 @@ function UploadModal({ onClose }: modalProps) {
         "thumbnail/"
       );
       const uploadSongResult = await handleUploadStorage(songFile, "song/");
-      console.log(uploadSongResult);
       imageLink = uploadImageResult as string;
       songLink = uploadSongResult as string;
 

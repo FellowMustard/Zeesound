@@ -71,6 +71,7 @@ const handleLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             user: foundUser.username,
             email: foundUser.email,
             token: accessToken,
+            likedSong: foundUser.likedSongs,
         });
     }
     else {
