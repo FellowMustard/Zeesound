@@ -8,5 +8,6 @@ const songPublicController_1 = require("../Controllers/songPublicController");
 const router = express_1.default.Router();
 router.get("/new-song", songPublicController_1.handleGetNewSong);
 router.get("/find/:id", songPublicController_1.handleSearchSong);
+router.get("/author/:id", songPublicController_1.handleSearchSongByAuthor);
 exports.default = router;
 //# sourceMappingURL=songPublicRoute.js.map

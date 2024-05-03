@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleSearchSong = exports.handleGetNewSong = void 0;
+exports.handleSearchSongByAuthor = exports.handleSearchSong = exports.handleGetNewSong = void 0;
 const Song_1 = __importDefault(require("../Model/Song"));
 const handleGetNewSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let songs;
@@ -50,4 +50,17 @@ const handleSearchSong = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.handleSearchSong = handleSearchSong;
+const handleSearchSongByAuthor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    try {
+        const result = yield Song_1.default.find({ author: id })
+            .populate("author", "_id name pic")
+            .exec();
+        res.status(200).json(result);
+    }
+    catch (err) {
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+exports.handleSearchSongByAuthor = handleSearchSongByAuthor;
 //# sourceMappingURL=songPublicController.js.map
