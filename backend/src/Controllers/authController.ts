@@ -74,6 +74,7 @@ export const handleLogin = async (req: Request, res: Response) => {
       user: foundUser.username,
       email: foundUser.email,
       token: accessToken,
+      likedSong: foundUser.likedSongs,
     });
   } else {
     res.status(401).json({ message: "Wrong Username / Password." });

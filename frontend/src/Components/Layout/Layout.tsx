@@ -32,7 +32,7 @@ function Layout({ children }: LayoutProps) {
 
   return (
     <>
-      <div className="flex w-full h-full flex-1 gap-2">
+      <div className="flex gap-2 h-full">
         <section className="min-w-[300px] md:flex flex-col gap-2 hidden">
           <Sidebar />
           <Library />

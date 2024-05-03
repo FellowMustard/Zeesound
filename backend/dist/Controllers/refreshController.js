@@ -59,6 +59,7 @@ const handleRefreshToken = (req, res) => __awaiter(void 0, void 0, void 0, funct
             user: foundUser.username,
             email: foundUser.email,
             token: accessToken,
+            likedSong: foundUser.likedSongs,
         });
     }));
 });
