@@ -33,3 +33,15 @@ export const handleSearchSong = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+export const handleSearchSongByAuthor = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  try {
+    const result = await Song.find({ author: id })
+      .populate("author", "_id name pic")
+      .exec();
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

@@ -7,6 +7,7 @@ import AuthChecker from "./AuthChecker";
 import AuthValidator from "./AuthValidator";
 import Song from "./Pages/Song";
 import PersistFooter from "./PersistFooter";
+import Group from "./Pages/Group";
 function App() {
   return (
     <Routes>
@@ -15,6 +16,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/song/:id" element={<Song />} />
+          <Route path="/group/:state">
+            <Route path=":id" element={<Group />} />
+            <Route path="" element={<Group />} />
+          </Route>
         </Route>
         <Route element={<AuthValidator />}>
           <Route path="/login" element={<Login />} />

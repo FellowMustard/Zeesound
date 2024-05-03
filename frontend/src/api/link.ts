@@ -6,4 +6,6 @@ export const createAuthor = "author/create";
 export const findAuthor = (name: string) => `author/find/${name}`;
 export const createSong = "song/create";
 export const getNewSongList = "public/song/new-song";
+export const getNewSongListAll = "public/song/new-song?all=true";
 export const findSong = (id: string) => `public/song/find/${id}`;
+export const findSongByAuthor = (id: string) => `public/song/author/${id}`;

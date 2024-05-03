@@ -1,26 +1,64 @@
-import { Link } from "react-router-dom";
-import Link_ from "../Link_";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { getNewSongListAll } from "../api/link";
+import axios from "../api/axios";
+import Layout from "../Components/Layout/Layout";
 
-type listProps = {
-  loading: boolean;
-  title: string;
-  data: dataProps[];
-  allPath?: string;
-};
 type dataProps = {
   id: string;
   pic: string;
   title: string;
   author: string;
 };
-function SectionList({ loading, title, data, allPath }: listProps) {
+
+function Group() {
+  const { state, id } = useParams();
+  const [groupData, setGroupData] = useState<dataProps[]>([]);
+  const [title, setTitle] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleGroupFetching = async (api: string) => {
+    if (loading) return;
+    setLoading(true);
+    try {
+      const response = await axios.get(api, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      console.log(response.data);
+      let mappedData = response.data.map((song: any) => ({
+        id: song._id,
+        pic: song.imagePath,
+        title: song.title,
+        author: song.author.name,
+      }));
+      setGroupData(mappedData);
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (state) {
+      let stateChecker = "";
+      switch (state) {
+        case "new":
+          stateChecker = getNewSongListAll;
+          setTitle("Newest Song");
+          break;
+      }
+      handleGroupFetching(stateChecker);
+    }
+  }, [state, id]);
   return (
-    <>
+    <Layout>
       {loading ? (
         <>
           <div className="w-1/5 h-6 rounded-full skeleton-loading min-w-[130px]"></div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 w-full mt-4">
-            {Array.from({ length: 6 }).map((_, index) => (
+            {Array.from({ length: 12 }).map((_, index) => (
               <div
                 key={index}
                 className="w-full bg-dark-saturated p-4 rounded flex flex-col gap-2"
@@ -35,13 +73,12 @@ function SectionList({ loading, title, data, allPath }: listProps) {
       ) : (
         <section>
           <div className="flex justify-between">
-            <span className="text-xl font-bold cursor-pointer hover:underline px-3">
+            <span className="text-3xl font-bold cursor-pointer px-3">
               {title}
             </span>
-            {allPath && <Link_ path={allPath}>Show All</Link_>}
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 w-full mt-4">
-            {data.map((song) => {
+            {groupData.map((song) => {
               return (
                 <Link to={`/song/${song.id}`} key={song.id}>
                   <div className="w-full hover:bg-white/10 p-3 rounded flex flex-col  cursor-pointer">
@@ -60,8 +97,8 @@ function SectionList({ loading, title, data, allPath }: listProps) {
           </div>
         </section>
       )}
-    </>
+    </Layout>
   );
 }
 
-export default SectionList;
+export default Group;

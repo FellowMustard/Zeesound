@@ -24,6 +24,11 @@ const songSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    likes: {
+      type: Number,
+      default: 0,
+      required: true,
+    },
   },
   { timestamps: true }
 );

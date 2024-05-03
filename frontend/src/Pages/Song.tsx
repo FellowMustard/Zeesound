@@ -6,6 +6,7 @@ import { findSong } from "../api/link";
 import { extractDominantColor } from "../Function/color";
 import { FaPause, FaPlay } from "react-icons/fa";
 import useAudio from "../Hooks/useAudio";
+import AuthorList from "../Components/List/AuthorList";
 
 type songProps = {
   id: string;
@@ -146,6 +147,13 @@ function Song() {
                 <FaPlay />
               </button>
             )}
+          </div>
+          <div className="p-6">
+            <AuthorList
+              authorId={songData.author.id}
+              title={`Other Song by ${songData.author.name}`}
+              filteredSongId={songData.id}
+            />
           </div>
         </main>
       )}
