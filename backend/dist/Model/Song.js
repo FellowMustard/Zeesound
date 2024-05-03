@@ -27,6 +27,11 @@ const songSchema = new mongoose_1.default.Schema({
         ref: "User",
         required: true,
     },
+    likes: {
+        type: Number,
+        default: 0,
+        required: true,
+    },
 }, { timestamps: true });
 const Song = mongoose_1.default.model("Song", songSchema);
 exports.default = Song;

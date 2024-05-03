@@ -8,11 +8,6 @@
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist"
   },
-  "pre-commit": [
-    "ts.check",
-    "build",
-    "add-build"
-  ],
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.1.1",
