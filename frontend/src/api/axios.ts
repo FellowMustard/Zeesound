@@ -1,5 +1,8 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:3500/api/";
+const BASE_URL =
+  import.meta.env.VITE_NODE_ENV === "dev"
+    ? "http://localhost:3500/api/"
+    : "https://zeesound-api.vercel.app/api/";
 
 export default axios.create({
   baseURL: BASE_URL,

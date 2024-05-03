@@ -20,7 +20,7 @@ function CountrySearch({ handleCountryValue }: countrySearchProps) {
   >([]);
 
   const handleCountryChange = (newValue: string) => {
-    setCountryInput((prevState: string) => (prevState = newValue));
+    setCountryInput(newValue);
   };
 
   const getCountryData = async () => {
@@ -31,7 +31,7 @@ function CountrySearch({ handleCountryValue }: countrySearchProps) {
       emoji: country.flag,
     }));
     mappedData.sort((a: any, b: any) => a.name.localeCompare(b.name));
-    setCountryDropdownData((prevState) => (prevState = mappedData));
+    setCountryDropdownData(mappedData);
   };
 
   const filterCountries = (inputValue: string) => {

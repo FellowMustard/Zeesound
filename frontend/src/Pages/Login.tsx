@@ -20,20 +20,20 @@ function Login() {
   const [passValue, setPassValue] = useState<string>("");
 
   const emailOnChange = (newValue: string) => {
-    setEmailValue((prevState: string) => (prevState = newValue));
+    setEmailValue(newValue);
   };
 
   const passOnChange = (newValue: string) => {
-    setPassValue((prevState: string) => (prevState = newValue));
+    setPassValue(newValue);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loading) return;
-    setLoading((prevState) => (prevState = true));
+    setLoading(true);
     if (!emailValue || !passValue) {
       toast?.open("Please Fill Username / Password!", "error");
-      setLoading((prevState) => (prevState = false));
+      setLoading(false);
       return;
     }
     try {
@@ -49,7 +49,7 @@ function Login() {
         }
       );
       setAuth(response.data);
-      setLoading((prevState) => (prevState = false));
+      setLoading(false);
       navigate(from, { replace: true });
     } catch (err: any) {
       if (!err?.response) {
@@ -57,7 +57,7 @@ function Login() {
       } else {
         toast?.open(err.response.data.message, "error");
       }
-      setLoading((prevState) => (prevState = false));
+      setLoading(false);
     }
   };
 

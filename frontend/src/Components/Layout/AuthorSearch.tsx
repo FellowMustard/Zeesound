@@ -42,7 +42,7 @@ function AuthorSearch({ handleAuthorValue }: authorSearchProps) {
   }, [debounceAuthor]);
 
   const handleAuthorChange = (newValue: string) => {
-    setAuthorInput((prevState: string) => (prevState = newValue));
+    setAuthorInput(newValue);
   };
 
   const handleAuthorPick = (action: string, name?: string) => {
@@ -62,7 +62,7 @@ function AuthorSearch({ handleAuthorValue }: authorSearchProps) {
         value: author._id,
         image: author.pic,
       }));
-      setAuthorDropdownData((prevState) => (prevState = mappedData));
+      setAuthorDropdownData(mappedData);
       setLoading(false);
     } catch (err) {
       console.error(err);

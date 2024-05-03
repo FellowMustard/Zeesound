@@ -46,8 +46,8 @@ function Input_({
         id={id}
         autoComplete="off"
         onChange={onChange ? (e) => onChange(e.target.value) : undefined}
-        onFocus={() => setInputFocus((prevState) => (prevState = true))}
-        onBlur={() => setInputFocus((prevState) => (prevState = false))}
+        onFocus={() => setInputFocus(true)}
+        onBlur={() => setInputFocus(false)}
         className=" w-full rounded outline-none border bg-transparent border-gray-400 p-2 focus:border-white"
         placeholder={placeholder}
       ></input>

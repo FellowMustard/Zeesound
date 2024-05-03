@@ -47,13 +47,13 @@ function UploadModal({ onClose }: modalProps) {
   };
 
   const handleSongChange = (newValue: string) => {
-    setSongName((prevState) => (prevState = newValue));
+    setSongName(newValue);
   };
   const handleImageFileChanges = (file: File | null) => {
-    setImageFile((prevState) => (prevState = file));
+    setImageFile(file);
   };
   const handleSongFileChanges = (file: File | null) => {
-    setSongFile((prevState) => (prevState = file));
+    setSongFile(file);
   };
   const handleDeleteAuthor = () => {
     setAuthorValue({

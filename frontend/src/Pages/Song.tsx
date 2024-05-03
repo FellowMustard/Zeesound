@@ -1,8 +1,7 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Layout from "../Components/Layout/Layout";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import axios from "../api/axios";
-import useLogout from "../Hooks/useLogout";
 import { findSong } from "../api/link";
 import { extractDominantColor } from "../Function/color";
 import { FaPause, FaPlay } from "react-icons/fa";
@@ -32,7 +31,7 @@ function Song() {
 
   const getNewSong = async () => {
     if (loading) return;
-    setLoading((prevState) => (prevState = true));
+    setLoading(true);
     try {
       const { data } = await axios.get(findSong(id!), {
         headers: { "Content-Type": "application/json" },
@@ -49,7 +48,7 @@ function Song() {
         },
       };
 
-      setSongData((prevState) => (prevState = mappedData));
+      setSongData(mappedData);
 
       setLoading(false);
     } catch (err) {
@@ -57,7 +56,7 @@ function Song() {
     }
   };
   useEffect(() => {
-    if (effectRun.current && id) {
+    if ((import.meta.env.VITE_NODE_ENV === "prod" || effectRun.current) && id) {
       getNewSong();
     }
     return () => {

@@ -9,8 +9,8 @@ function useInputValidator({ initialValue, regexValue }: inputValidatorProps) {
   const [valid, setValid] = useState<boolean>(false);
 
   const handleChange = (newValue: string) => {
-    setValue((prevState) => (prevState = newValue));
-    setValid((prevState) => (prevState = regexValue.test(newValue)));
+    setValue(newValue);
+    setValid(regexValue.test(newValue));
   };
 
   return [value, valid, handleChange] as const;

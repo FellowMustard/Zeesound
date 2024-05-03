@@ -35,7 +35,7 @@ function NewList() {
         title: song.title,
         author: song.author.name,
       }));
-      setNewSongData((prevState) => (prevState = mappedData));
+      setNewSongData(mappedData);
       setLoading(false);
     } catch (err) {
       console.error(err);
@@ -45,7 +45,7 @@ function NewList() {
   };
 
   useEffect(() => {
-    if (effectRun.current) {
+    if (import.meta.env.VITE_NODE_ENV === "prod" || effectRun.current) {
       getNewSong();
     }
     return () => {
