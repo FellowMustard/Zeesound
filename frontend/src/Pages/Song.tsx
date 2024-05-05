@@ -173,6 +173,7 @@ function Song() {
             <div className="self-center font-semibold cursor-pointer">
               <p className="ml-1">Song</p>
               <p className="text-6xl">{songData.title}</p>
+
               <p className="mt-8 flex gap-2 group :">
                 <img
                   src={songData.author.pic}

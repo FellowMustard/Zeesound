@@ -8,6 +8,7 @@ export const createSong = "song/create";
 export const likeSong = "song/like";
 export const dislikeSong = "song/dislike";
 export const getUserLikedSong = "song/likedsong";
+export const getUserLikedSongAll = "song/likedsong?all=true";
 export const getNewSongList = "public/song/new-song";
 export const getNewSongListAll = "public/song/new-song?all=true";
 export const findSong = (id: string) => `public/song/find/${id}`;

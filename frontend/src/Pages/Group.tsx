@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { getNewSongListAll } from "../api/link";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { getNewSongListAll, getUserLikedSongAll } from "../api/link";
 import axios from "../api/axios";
 import Layout from "../Components/Layout/Layout";
+import useAxiosProtect from "../Hooks/useAxiosProtect";
+import useToast from "../Hooks/useToast";
+import useLogout from "../Hooks/useLogout";
 
 type dataProps = {
   id: string;
@@ -17,15 +20,32 @@ function Group() {
   const [title, setTitle] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleGroupFetching = async (api: string) => {
+  const axiosProtect = useAxiosProtect();
+
+  const toast = useToast();
+  const navigate = useNavigate();
+  const logout = useLogout();
+
+  const handleGroupFetching = async (
+    api: string,
+    protect?: boolean | false
+  ) => {
     if (loading) return;
     setLoading(true);
     try {
-      const response = await axios.get(api, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-      console.log(response.data);
+      let response;
+      if (protect) {
+        response = await axiosProtect.get(api, {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        });
+      } else {
+        response = await axios.get(api, {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        });
+      }
+      console.log(response);
       let mappedData = response.data.map((song: any) => ({
         id: song._id,
         pic: song.imagePath,
@@ -34,8 +54,21 @@ function Group() {
       }));
       setGroupData(mappedData);
       setLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      if (protect) {
+        if (!err?.response) {
+          toast?.open(err, "error");
+        } else {
+          const { status } = err.response;
+          if (status === 401 || status === 403) {
+            logout();
+            navigate("/login", { replace: true });
+          } else {
+            toast?.open(err.response.data.message, "error");
+          }
+        }
+      }
       setLoading(false);
     }
   };
@@ -43,13 +76,19 @@ function Group() {
   useEffect(() => {
     if (state) {
       let stateChecker = "";
+      let protect = false;
       switch (state) {
         case "new":
           stateChecker = getNewSongListAll;
-          setTitle("Newest Song");
+          setTitle("Recently Uploaded Song");
+          break;
+        case "liked":
+          stateChecker = getUserLikedSongAll;
+          protect = true;
+          setTitle("Recently Liked Song");
           break;
       }
-      handleGroupFetching(stateChecker);
+      handleGroupFetching(stateChecker, protect);
     }
   }, [state, id]);
   return (
