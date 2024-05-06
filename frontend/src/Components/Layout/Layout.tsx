@@ -32,8 +32,8 @@ function Layout({ children }: LayoutProps) {
 
   return (
     <>
-      <div className="flex gap-2 h-full">
-        <section className="min-w-[300px] md:flex flex-col gap-2 hidden">
+      <div className="flex gap-2 h-full p-2 pb-0">
+        <section className="w-[150px] lg:w-[300px] md:flex flex-col gap-2 hidden">
           <Sidebar />
           <Library />
         </section>

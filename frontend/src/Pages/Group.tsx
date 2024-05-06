@@ -12,6 +12,7 @@ type dataProps = {
   pic: string;
   title: string;
   author: string;
+  isPlaylist?: boolean | false;
 };
 
 function Group() {
@@ -50,7 +51,8 @@ function Group() {
         id: song._id,
         pic: song.imagePath,
         title: song.title,
-        author: song.author.name,
+        author: song.author.name || "",
+        isPlaylist: song.isPlaylist || false,
       }));
       setGroupData(mappedData);
       setLoading(false);
@@ -119,7 +121,14 @@ function Group() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 w-full mt-4">
             {groupData.map((song) => {
               return (
-                <Link to={`/song/${song.id}`} key={song.id}>
+                <Link
+                  to={
+                    song.isPlaylist
+                      ? `/playlist/${song.id}`
+                      : `/song/${song.id}`
+                  }
+                  key={song.id}
+                >
                   <div className="w-full hover:bg-white/10 p-3 rounded flex flex-col  cursor-pointer">
                     <img
                       src={song.pic}
