@@ -13,6 +13,7 @@ import useAuth from "../Hooks/useAuth";
 import useToast from "../Hooks/useToast";
 import useLogout from "../Hooks/useLogout";
 import useAxiosProtect from "../Hooks/useAxiosProtect";
+import useModal from "../Hooks/useModal";
 
 type songProps = {
   id: string;
@@ -32,6 +33,7 @@ function Song() {
   const toast = useToast();
   const navigate = useNavigate();
   const logout = useLogout();
+  const { openModal } = useModal();
 
   const axiosProtect = useAxiosProtect();
 
@@ -43,7 +45,7 @@ function Song() {
   const [isLiking, setIsLiking] = useState<boolean>(false);
 
   const { isPlaying, setIsPlaying, songId, setSongId } = useAudio();
-  const { likedSongs, setLikedSongs } = useAuth();
+  const { auth, likedSongs, setLikedSongs } = useAuth();
 
   const getNewSong = async () => {
     if (loading) return;
@@ -112,6 +114,10 @@ function Song() {
   };
 
   const handleLike = async (like: boolean) => {
+    if (!auth.token) {
+      openModal("Limited_Modal");
+      return;
+    }
     if (likeLoading) return;
     setLikeLoading(true);
 
@@ -167,6 +173,7 @@ function Song() {
             <div className="self-center font-semibold cursor-pointer">
               <p className="ml-1">Song</p>
               <p className="text-6xl">{songData.title}</p>
+
               <p className="mt-8 flex gap-2 group :">
                 <img
                   src={songData.author.pic}

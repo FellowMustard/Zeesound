@@ -4,33 +4,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const userSchema = new mongoose_1.default.Schema({
-    username: {
+const playlistSchema = new mongoose_1.default.Schema({
+    name: {
         type: String,
         required: true,
     },
-    email: {
+    imagePath: {
         type: String,
         required: true,
     },
-    password: {
-        type: String,
-        required: true,
-    },
-    likedPlaylist: [
-        {
-            type: mongoose_1.default.Schema.Types.ObjectId,
-            ref: "Playlist",
-        },
-    ],
-    likedSongs: [
+    songs: [
         {
             type: mongoose_1.default.Schema.Types.ObjectId,
             ref: "Song",
         },
     ],
-    refreshToken: [],
+    createdBy: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    likes: {
+        type: Number,
+        default: 0,
+        required: true,
+    },
 }, { timestamps: true });
-const User = mongoose_1.default.model("User", userSchema);
-exports.default = User;
-//# sourceMappingURL=User.js.map
+const Playlist = mongoose_1.default.model("Playlist", playlistSchema);
+exports.default = Playlist;
+//# sourceMappingURL=Playlist.js.map

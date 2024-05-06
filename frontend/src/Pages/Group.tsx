@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { getNewSongListAll } from "../api/link";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { getNewSongListAll, getUserLikedSongAll } from "../api/link";
 import axios from "../api/axios";
 import Layout from "../Components/Layout/Layout";
+import useAxiosProtect from "../Hooks/useAxiosProtect";
+import useToast from "../Hooks/useToast";
+import useLogout from "../Hooks/useLogout";
 
 type dataProps = {
   id: string;
   pic: string;
   title: string;
   author: string;
+  isPlaylist?: boolean | false;
 };
 
 function Group() {
@@ -17,25 +21,56 @@ function Group() {
   const [title, setTitle] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleGroupFetching = async (api: string) => {
+  const axiosProtect = useAxiosProtect();
+
+  const toast = useToast();
+  const navigate = useNavigate();
+  const logout = useLogout();
+
+  const handleGroupFetching = async (
+    api: string,
+    protect?: boolean | false
+  ) => {
     if (loading) return;
     setLoading(true);
     try {
-      const response = await axios.get(api, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-      console.log(response.data);
+      let response;
+      if (protect) {
+        response = await axiosProtect.get(api, {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        });
+      } else {
+        response = await axios.get(api, {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        });
+      }
+      console.log(response);
       let mappedData = response.data.map((song: any) => ({
         id: song._id,
         pic: song.imagePath,
         title: song.title,
-        author: song.author.name,
+        author: song.author.name || "",
+        isPlaylist: song.isPlaylist || false,
       }));
       setGroupData(mappedData);
       setLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      if (protect) {
+        if (!err?.response) {
+          toast?.open(err, "error");
+        } else {
+          const { status } = err.response;
+          if (status === 401 || status === 403) {
+            logout();
+            navigate("/login", { replace: true });
+          } else {
+            toast?.open(err.response.data.message, "error");
+          }
+        }
+      }
       setLoading(false);
     }
   };
@@ -43,13 +78,19 @@ function Group() {
   useEffect(() => {
     if (state) {
       let stateChecker = "";
+      let protect = false;
       switch (state) {
         case "new":
           stateChecker = getNewSongListAll;
-          setTitle("Newest Song");
+          setTitle("Recently Uploaded Song");
+          break;
+        case "liked":
+          stateChecker = getUserLikedSongAll;
+          protect = true;
+          setTitle("Recently Liked Song");
           break;
       }
-      handleGroupFetching(stateChecker);
+      handleGroupFetching(stateChecker, protect);
     }
   }, [state, id]);
   return (
@@ -80,7 +121,14 @@ function Group() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 w-full mt-4">
             {groupData.map((song) => {
               return (
-                <Link to={`/song/${song.id}`} key={song.id}>
+                <Link
+                  to={
+                    song.isPlaylist
+                      ? `/playlist/${song.id}`
+                      : `/song/${song.id}`
+                  }
+                  key={song.id}
+                >
                   <div className="w-full hover:bg-white/10 p-3 rounded flex flex-col  cursor-pointer">
                     <img
                       src={song.pic}

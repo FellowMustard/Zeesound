@@ -34,7 +34,7 @@ function LikedList() {
           withCredentials: true,
         });
 
-        const mappedData = response.data.likedSongs.map((song: any) => ({
+        const mappedData = response.data.map((song: any) => ({
           id: song._id,
           pic: song.imagePath,
           title: song.title,
@@ -71,6 +71,7 @@ function LikedList() {
       loading={loading}
       title="Song That You Like"
       data={newSongData}
+      allPath="/group/liked"
     ></SectionList>
   );
 }
