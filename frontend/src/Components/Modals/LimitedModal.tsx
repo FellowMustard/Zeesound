@@ -8,7 +8,8 @@ function LimitedModal({ onClose }: modalProps) {
   return (
     <Modal_ title="" onClose={onClose}>
       <p className="text-center text-2xl font-bold py-4 px-8">
-        Start exploring and listening with new Zeecord Account
+        Start exploring and listening with new{" "}
+        <span className="zeesound">Zeesound</span> Account
       </p>
       <Link to="/register" className=" mx-auto w-fit block" onClick={onClose}>
         <Button_ className="bg-dark-primary px-8 py-4 rounded-full h-full">
